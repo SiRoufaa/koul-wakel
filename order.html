@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koul&Wakel - Menu & Order</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #8B4513;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .menu-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .cart-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        h2 {
+            color: #8B4513;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .menu-category {
+            margin-bottom: 30px;
+        }
+        
+        .menu-category h3 {
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .item-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .item-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 15px;
+        }
+        
+        .item-price span {
+            font-weight: bold;
+            color: #8B4513;
+            font-size: 1.1rem;
+        }
+        
+        .add-to-cart {
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #8B4513;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background-color: #ddd;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        
+        .remove-btn {
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .cart-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: right;
+            margin: 20px 0;
+        }
+        
+        .checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-section {
+                position: static;
+            }
+
+        }
+        #t1{
+            
+            font-size: 28px;
+           
+            font-style: italic;
+        }
+        #t1 span{
+            color: rgb(191, 149, 93);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="t1"><strong>Koul<span>&</span>Wakel </strong>Restaurant</h1>
+        <p>Order your favorite meals online</p>
+    </header>
+    
+    <div class="container">
+        <section class="menu-section">
+            <h2>Our Menu</h2>
+            
+            <div class="menu-category">
+                <h3>Starters</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Chorba </h4>
+                        <p>chorba frik with fish or meat you choice</p>
+                    </div>
+                    <div class="item-price">
+                        <span>3.5DT</span>
+                        <button class="add-to-cart" data-id="1" data-name="Chorba" data-price="3.5">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Brik</h4>
+                        <p>Brik fried malsouka with eggs and tuna and kabar</p>
+                    </div>
+                    <div class="item-price">
+                        <span>2.5DT</span>
+                        <button class="add-to-cart" data-id="2" data-name="Brik" data-price="2.5">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Main Courses</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Kosksi with mutton</h4>
+                        <p>Classic Tunisian dish with mutton ,carrots and pumpkin</p>
+                    </div>
+                    <div class="item-price">
+                        <span>14.99DT</span>
+                        <button class="add-to-cart" data-id="3" data-name="Kosksi with mutton" data-price="14.99">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Grilled wrata</h4>
+                        <p>Fresh wrata with lemon butter sauce and seasonal vegetables</p>
+                    </div>
+                    <div class="item-price">
+                        <span>15.99DT</span>
+                        <button class="add-to-cart" data-id="4" data-name="Grilled wrata" data-price="15.99">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Ma9arouna Fell</h4>
+                        <p>Tunisian authentic pasta made with chicken and a lot of vegetables</p>
+                    </div>
+                    <div class="item-price">
+                        <span>12.99DT</span>
+                        <button class="add-to-cart" data-id="5" data-name="Ma9arouna Fell" data-price="12.99">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category">
+                <h3>Desserts</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>kaak war9a</h4>
+                        <p>tunisian authentic sweets </p>
+                    </div>
+                    <div class="item-price">
+                        <span>3.99DT</span>
+                        <button class="add-to-cart" data-id="6" data-name="kaak war9a" data-price="3.99">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>asida with zgougou</h4>
+                        <p>Warm cream made with pinenuts and drizilled with white cream</p>
+                    </div>
+                    <div class="item-price">
+                        <span>5.99DT</span>
+                        <button class="add-to-cart" data-id="7" data-name="asida with zgouzou" data-price="5.99">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-category">
+                <h3>Driks</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Tunisian Tea</h4>
+                        <p>tunisian authentic Tea </p>
+                    </div>
+                    <div class="item-price">
+                        <span>1.99DT</span>
+                        <button class="add-to-cart" data-id="8" data-name="Tunisian Tea" data-price="1.99">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <h4>Lemonade </h4>
+                        <p>Fresh lemonade with mint and ice </p>
+                    </div>
+                    <div class="item-price">
+                        <span>2.99DT</span>
+                        <button class="add-to-cart" data-id="9" data-name="Lemonade" data-price="2.99">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cart-section">
+            <h2>Your Order</h2>
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart">Your cart is empty</div>
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: 0.00DT
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Confirm Order</button>
+        </section>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Add to cart functionality
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const price = parseFloat(this.getAttribute('data-price'));
+                    
+                    addToCart(id, name, price);
+                });
+            });
+            
+            // Add item to cart
+            function addToCart(id, name, price) {
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+            }
+            
+            // Update cart display
+            function updateCart() {
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                    cartTotalElement.textContent = 'Total: 0.00DT';
+                    return;
+                }
+                
+                cartItemsContainer.innerHTML = '';
+                let total = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <div>${item.name}</div>
+                        <div class="cart-item-controls">
+                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                            <button class="remove-btn" data-id="${item.id}">×</button>
+                            <span>${itemTotal.toFixed(2)}DT</span>
+                        </div>
+                    `;
+                    
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+                
+                cartTotalElement.textContent = `Total: ${total.toFixed(2)}DT`;
+                
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        decreaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        increaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        removeItem(id);
+                    });
+                });
+            }
+            
+            // Increase item quantity
+            function increaseQuantity(id) {
+                const item = cart.find(item => item.id === id);
+                if (item) {
+                    item.quantity += 1;
+                    updateCart();
+                }
+            }
+            
+            // Decrease item quantity
+            function decreaseQuantity(id) {
+                const item = cart.find(item => item.id === id);
+                if (item) {
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    updateCart();
+                }
+            }
+            
+            // Remove item from cart
+            function removeItem(id) {
+                cart = cart.filter(item => item.id !== id);
+                updateCart();
+            }
+            
+            // Checkout functionality
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty. Please add some items first.');
+                    return;
+                }
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const orderDetails = cart.map(item => 
+                    `${item.name} (${item.quantity} x $${item.price.toFixed(2)})`
+                ).join('\n');
+                
+                if (confirm(`Confirm your order:\n\n${orderDetails}\n\nTotal: $${total.toFixed(2)}\n\nProceed to checkout?`)) {
+                    alert('Thank you for your order! Your food will be prepared shortly.');
+                    cart = [];
+                    updateCart();
+                }
+            });
+            
+            // Initialize cart display
+            updateCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koul&Wakel - Sign In / Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+        }
+
+        .form-container {
+            width: 50%;
+            padding: 40px;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container {
+            background-color: white;
+        }
+
+        .sign-up-container {
+            background-color: #f1f1f1;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            left: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .container.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #8B4513;
+            text-align: center;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .logo .koul {
+            color: #8B4513;
+        }
+        .logo .and {
+            color:rgb(255, 194, 115);
+        }
+
+        .logo .wakel {
+            color: #8B4513;
+
+        }
+        
+
+        .social-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-container a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-container a:hover {
+            background-color: #8B4513;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #8B4513;
+        }
+
+        button {
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #8B4513;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .forgot-password a {
+            color: #777;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            color: #8B4513;
+        }
+
+        .toggle-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
+            z-index: 10;
+        }
+
+        .container.right-panel-active .toggle-container {
+            transform: translateX(-100%);
+        }
+
+        .toggle {
+            background-color: #8B4513;
+            height: 100%;
+            color: white;
+            position: relative;
+            left: -100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .toggle {
+            transform: translateX(50%);
+        }
+
+        .toggle-panel {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 30px;
+            text-align: center;
+            top: 0;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .toggle-left {
+            transform: translateX(-200%);
+        }
+
+        .container.right-panel-active .toggle-left {
+            transform: translateX(0);
+        }
+
+        .toggle-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .toggle-right {
+            transform: translateX(200%);
+        }
+
+        .toggle h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .toggle p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-button {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 30px;
+        }
+
+        .toggle-button:hover {
+            background-color: white;
+            color: #8B4513;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .form-container, .sign-up-container {
+                width: 100%;
+            }
+
+            .sign-up-container {
+                position: relative;
+                transform: none;
+                opacity: 1;
+                top: auto;
+                left: auto;
+            }
+
+            .toggle-container {
+                display: none;
+            }
+
+            .container.right-panel-active .sign-in-container {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <div class="logo">
+                <span class="koul">Koul</span><span class="and">&</span><span class="wakel">Wakel</span>
+            </div>
+            <h1>Sign in to your account</h1>
+            <div class="social-container">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email account</span>
+            <form id="signInForm">
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Password" required />
+                <div class="forgot-password">
+                    <a href="#">Forgot your password?</a>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+        <div class="form-container sign-up-container">
+            <div class="logo">
+                <span class="koul">Koul</span>&<span class="wakel">Wakel</span>
+            </div>
+            <h1>Create Account</h1>
+            <div class="social-container">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registration</span>
+            <form id="signUpForm">
+                <input type="text" placeholder="Name" required />
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Password" required />
+                <input type="password" placeholder="Confirm Password" required />
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h2>Welcome Back!</h2>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="toggle-button" id="signInToggle">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h2>Hello, Foodie!</h2>
+                    <p>Register with your personal details to enjoy our delicious meals</p>
+                    <button class="toggle-button" id="signUpToggle">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between Sign In and Sign Up forms
+        const signUpToggle = document.getElementById('signUpToggle');
+        const signInToggle = document.getElementById('signInToggle');
+        const container = document.getElementById('container');
+
+        signUpToggle.addEventListener('click', () => {
+            container.classList.add('right-panel-active');
+        });
+
+        signInToggle.addEventListener('click', () => {
+            container.classList.remove('right-panel-active');
+        });
+
+        // Form submission handling
+        document.getElementById('signInForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelector('input[type="password"]').value;
+            
+            // Here you would typically send this data to your server
+            console.log('Sign In Attempt:', { email, password });
+            alert('Sign In functionality would connect to your backend system');
+        });
+
+        document.getElementById('signUpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const password = this.querySelectorAll('input[type="password"]')[0].value;
+            const confirmPassword = this.querySelectorAll('input[type="password"]')[1].value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Here you would typically send this data to your server
+            console.log('Sign Up Attempt:', { name, email, password });
+            alert('Account created! (In a real app, this would save to your database)');
+        });
+    </script>
+    
+    <!-- Font Awesome for social icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
